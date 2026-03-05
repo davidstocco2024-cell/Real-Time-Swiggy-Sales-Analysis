@@ -11,7 +11,7 @@
 **End-to-end exploratory data analysis on Swiggy food delivery sales data.**  
 Uncovering revenue trends, customer behavior, and geographic performance across India.
 
-[📊 View Notebook](#) · [💼 LinkedIn](https://www.linkedin.com/in/david-stocco-35ba40278/) · [🐛 Report Issue](https://github.com/davidstocco2024-cell/Real-Time-Swiggy-Sales-Analysis/issues)
+[📊 View Notebook](./swiggy_sales.ipynb) · [💼 LinkedIn](https://www.linkedin.com/in/david-stocco-35ba40278/) · [🐛 Report Issue](https://github.com/davidstocco2024-cell/Real-Time-Swiggy-Sales-Analysis/issues)
 
 </div>
 
@@ -19,7 +19,52 @@ Uncovering revenue trends, customer behavior, and geographic performance across 
 
 ## 📌 Project Overview
 
-This project performs a full exploratory data analysis (EDA) on Swiggy's food delivery sales dataset. The goal is to extract actionable business insights around revenue performance, customer ratings, food preferences, and geographic distribution — the kind of analysis that directly informs operational and marketing decisions for a food delivery platform.
+End-to-end exploratory data analysis on Swiggy's food delivery sales dataset covering **197,000+ orders** across multiple Indian states and cities. The goal is to extract actionable business insights around revenue performance, customer ratings, food preferences, and geographic distribution — the kind of analysis that directly informs operational and marketing decisions for a food delivery platform.
+
+---
+
+## 📊 Key KPIs
+
+| Metric | Value |
+|--------|-------|
+| 💰 **Total Revenue** | ₹5,300,000+ |
+| 🛒 **Total Orders** | 197,000+ |
+| ⭐ **Average Rating** | Calculated per analysis |
+| 🧾 **Average Order Value** | Derived from total sales |
+
+---
+
+## 📈 Visualizations
+
+### 📅 Daily Revenue Trend (Mon–Sun)
+
+> Revenue grouped by day of week to identify peak ordering days and staffing opportunities.
+
+![Daily Sales Trend](./daily%20sales%20trend.png)
+
+---
+
+### 🥗 Revenue Contribution: Veg vs Non-Veg
+
+> Dish names classified via keyword detection into Veg/Non-Veg categories to understand customer food preferences and revenue split.
+
+![Revenue Contribution](./Revenue%20contribution.png)
+
+---
+
+### 🗺️ Revenue by State
+
+> Horizontal bar chart ranking all states by total sales — identifies Swiggy's strongest and weakest markets geographically.
+
+![Revenue by State](./Revenue%20by%20state.png)
+
+---
+
+### 🏙️ Top 5 Cities by Sales
+
+> Focused view on the five highest-performing cities to guide market expansion and promotional investment decisions.
+
+![Top 5 Cities](./Top%205%20cities.png)
 
 ---
 
@@ -28,45 +73,11 @@ This project performs a full exploratory data analysis (EDA) on Swiggy's food de
 | # | Question | Method |
 |---|----------|--------|
 | 1 | What is the total and average revenue per order? | KPI aggregation |
-| 2 | Which days of the week generate the most revenue? | Day-of-week groupby |
-| 3 | Do customers prefer Veg or Non-Veg dishes? | Keyword classification + pie chart |
-| 4 | Which states and cities drive the most sales? | Geographic groupby + horizontal bar |
+| 2 | Which days of the week generate the most revenue? | Day-of-week `groupby` |
+| 3 | Do customers prefer Veg or Non-Veg dishes? | Keyword classification + donut chart |
+| 4 | Which states and cities drive the most sales? | Geographic `groupby` + horizontal bar |
 | 5 | How does performance vary across quarters? | Period-based aggregation |
 | 6 | What is the average customer rating? | Mean aggregation |
-
----
-
-## 📊 KPIs Dashboard
-
-| Metric | Description |
-|--------|-------------|
-| **Total Sales (INR)** | Sum of all order revenue |
-| **Average Order Value** | Mean revenue per transaction |
-| **Average Rating** | Customer satisfaction score |
-| **Total Rating Count** | Volume of reviews received |
-| **Total Orders** | Number of transactions analyzed |
-
----
-
-## 📈 Visualizations
-
-- **Daily Revenue Trend** — Bar chart showing revenue by day of week (Mon–Sun), highlighting peak sales days
-- **Veg vs Non-Veg Revenue** — Donut chart comparing revenue contribution by food category
-- **Revenue by State** — Horizontal bar chart ranking all states by total sales
-- **Top 5 Cities by Sales** — Focused view on highest-performing cities
-- **Quarterly Performance Summary** — Table with total sales, average rating and order count per quarter
-
----
-
-## 🗂️ Project Structure
-
-```
-Real-Time-Swiggy-Sales-Analysis/
-│
-├── swiggy_sales.ipynb       # Main analysis notebook
-├── swiggy_data.xlsx         # Source dataset (not included — see below)
-└── README.md                # Project documentation
-```
 
 ---
 
@@ -75,10 +86,26 @@ Real-Time-Swiggy-Sales-Analysis/
 | Library | Purpose |
 |---------|---------|
 | `pandas` | Data loading, cleaning, transformation and aggregation |
-| `numpy` | Numerical operations and conditional column creation |
+| `numpy` | Numerical operations and conditional column creation (`np.where`) |
 | `matplotlib` | Base plotting layer |
-| `seaborn` | Statistical chart styling |
-| `plotly.express` | Interactive charts (pie, bar, geographic) |
+| `seaborn` | Statistical chart styling and whitegrid theme |
+| `plotly.express` | Interactive charts — pie/donut, horizontal bar |
+
+---
+
+## 🗂️ Project Structure
+
+```
+Real-Time-Swiggy-Sales-Analysis/
+│
+├── swiggy_sales.ipynb          # Main analysis notebook
+├── swiggy_data.xlsx            # Source dataset (not included — see setup)
+├── daily sales trend.png       # Revenue by day of week
+├── Revenue contribution.png    # Veg vs Non-Veg donut chart
+├── Revenue by state.png        # Geographic revenue breakdown
+├── Top 5 cities.png            # Top 5 cities by total sales
+└── README.md                   # Project documentation
+```
 
 ---
 
@@ -96,9 +123,9 @@ pip install pandas numpy matplotlib seaborn plotly openpyxl
 ```
 
 ### 3. Add the dataset
-Place `swiggy_data.xlsx` in the project root. Update the file path in cell 5 of the notebook:
+Place `swiggy_data.xlsx` in the project root, then update the path in the notebook:
 ```python
-# Change this line to match your local path
+# Replace the hardcoded path with:
 df = pd.read_excel('swiggy_data.xlsx')
 ```
 
@@ -111,22 +138,13 @@ jupyter notebook swiggy_sales.ipynb
 
 ## 💡 Key Insights
 
-- **Food Category**: Revenue is classified into Veg/Non-Veg using keyword detection on dish names — a practical NLP-lite approach for uncleaned real-world data
-- **Geographic Performance**: State and city-level breakdowns reveal which markets Swiggy dominates and which present growth opportunities
-- **Day-of-Week Patterns**: Identifying peak revenue days helps optimize delivery staffing and promotional timing
-- **Quarterly Trends**: Quarter-over-quarter comparison surfaces seasonality and growth trajectory
+- **Peak days**: Day-of-week analysis reveals which days concentrate the highest order volume — directly applicable for delivery capacity planning
+- **Food preferences**: Keyword-based Veg/Non-Veg classification shows clear revenue dominance by category, guiding restaurant partnership strategy
+- **Geographic concentration**: A small number of states and cities account for a disproportionate share of total revenue — typical power-law distribution in delivery markets
+- **Quarterly trends**: Period-based aggregation surfaces seasonality patterns useful for demand forecasting
 
 ---
 
-## 🔮 Next Steps
-
-- [ ] Add monthly sales trend chart (time series line plot)
-- [ ] Correlate ratings with revenue — do higher-rated restaurants earn more?
-- [ ] Build an interactive Plotly dashboard combining all KPIs
-- [ ] Add statistical testing to validate day-of-week revenue differences
-- [ ] Connect to a SQL database for larger-scale querying (Python + SQL Server)
-
----
 
 ## 👤 Author
 
